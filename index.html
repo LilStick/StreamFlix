@@ -13,7 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://streamflix.com">
     <!-- Liens vers CSS et JS prêts pour demain -->
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Lien d'évitement pour l'accessibilité -->
@@ -89,46 +89,45 @@
 
     <!-- Contenu principal -->
     <main id="main-content" role="main">
-        <!-- Section Hero -->
+        <!-- Remplacez la section hero par ceci : -->
         <section class="hero" aria-labelledby="hero-title">
-            <div class="hero-background" role="img" aria-label="Image de fond du film Inception">
-                <div class="hero-overlay">
-                    <div class="hero-content">
-                        <h2 id="hero-title">Inception</h2>
-                        <div class="hero-meta">
-                            <span class="year">2010</span>
-                            <span class="duration">2h28</span>
-                            <div class="rating" aria-label="Note : 4,5 étoiles sur 5">
-                                <span aria-hidden="true">★★★★☆</span>
-                                <span class="rating-text">4.5/5</span>
-                            </div>
-                            <div class="genres">
-                                <span class="genre">Sci-Fi</span>
-                                <span class="genre">Thriller</span>
-                            </div>
-                        </div>
-                        <p class="hero-description">
-                            Un voleur qui s'infiltre dans les rêves des autres pour voler leurs secrets découvre qu'il doit réaliser l'impossible : planter une idée plutôt que de la voler.
-                        </p>
-                        <div class="hero-actions">
-                            <button class="btn-primary" aria-describedby="play-description">
-                                <span aria-hidden="true">▶</span>
-                                Lecture
-                            </button>
-                            <span id="play-description" class="visually-hidden">Lancer la lecture du film Inception</span>
+            <div class="hero-content">
+                <h2 id="hero-title">Inception</h2>
 
-                            <button class="btn-secondary">
-                                <span aria-hidden="true">ℹ</span>
-                                Plus d'infos
-                            </button>
-
-                            <button class="btn-outline" aria-describedby="add-list-description">
-                                <span aria-hidden="true">+</span>
-                                Ma Liste
-                            </button>
-                            <span id="add-list-description" class="visually-hidden">Ajouter Inception à ma liste</span>
-                        </div>
+                <div class="hero-meta">
+                    <span class="year">2010</span>
+                    <span class="duration">2h28</span>
+                    <div class="rating">
+                        <span class="stars" aria-hidden="true">★★★★☆</span>
+                        <span class="rating-text">4.5/5</span>
                     </div>
+                </div>
+
+                <div class="hero-genres">
+                    <span class="genre">Sci-Fi</span>
+                    <span class="genre">Thriller</span>
+                    <span class="genre">Action</span>
+                </div>
+
+                <p class="hero-description">
+                    Un voleur qui s'infiltre dans les rêves des autres pour voler leurs secrets découvre qu'il doit réaliser l'impossible : planter une idée plutôt que de la voler.
+                </p>
+
+                <div class="hero-actions">
+                    <button class="btn-play">
+                        <span class="btn-icon" aria-hidden="true">▶</span>
+                        Lecture
+                    </button>
+
+                    <button class="btn-info">
+                        <span class="btn-icon" aria-hidden="true">ℹ</span>
+                        Plus d'infos
+                    </button>
+
+                    <button class="btn-list">
+                        <span class="btn-icon" aria-hidden="true">+</span>
+                        Ma Liste
+                    </button>
                 </div>
             </div>
         </section>
