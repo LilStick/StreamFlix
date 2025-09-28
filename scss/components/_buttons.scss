@@ -1,0 +1,132 @@
+// ==========================================================================
+// BOUTONS STREAMFLIX
+// ==========================================================================
+
+// Bouton principal StreamFlix
+.btn-streamflix {
+  @include streamflix-button($primary-red, $text-light, darken($primary-red, 10%));
+
+  .btn-icon {
+    font-size: 1.2em;
+  }
+}
+
+// Bouton secondaire
+.btn-streamflix-secondary {
+  @include streamflix-button($secondary-gray, $text-light, lighten($secondary-gray, 10%));
+}
+
+// Bouton transparent
+.btn-streamflix-outline {
+  @include streamflix-button(transparent, $text-light, rgba($text-light, 0.1));
+  border: 2px solid $text-light;
+
+  &:hover {
+    border-color: $primary-red;
+    color: $primary-red;
+  }
+}
+
+// Bouton d'information
+.btn-info-custom {
+  @include streamflix-button($accent-blue, $text-light, darken($accent-blue, 10%));
+}
+
+// Groupe de boutons hero
+.hero-actions {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+  margin-top: $spacing-lg;
+
+  @include respond-to(mobile) {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// Boutons avec icônes
+.btn-play {
+  @include streamflix-button($text-light, $primary-dark, rgba($text-light, 0.8));
+  font-weight: 700;
+
+  .btn-icon {
+    font-size: 1.1em;
+    margin-right: 0.5rem;
+  }
+}
+
+.btn-info {
+  @include streamflix-button(rgba($secondary-gray, 0.7), $text-light, rgba($secondary-gray, 0.9));
+
+  .btn-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+.btn-list {
+  @include streamflix-button(transparent, $text-light, rgba($text-light, 0.1));
+  border: 2px solid rgba($text-light, 0.3);
+
+  &:hover {
+    border-color: $text-light;
+  }
+
+  .btn-icon {
+    margin-right: 0.5rem;
+    font-weight: 300;
+    font-size: 1.2em;
+  }
+}
+
+// Boutons de taille
+.btn-sm-custom {
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-small;
+}
+
+.btn-lg-custom {
+  padding: $spacing-md $spacing-xl;
+  font-size: 1.125rem;
+}
+
+// États des boutons
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+
+  &:hover {
+    transform: none !important;
+  }
+}
+
+// Animation de loading
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

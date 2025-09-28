@@ -1,0 +1,248 @@
+// ==========================================================================
+// NAVIGATION STREAMFLIX
+// ==========================================================================
+
+// Navbar personnalisée
+.navbar-streamflix {
+  background-color: rgba($primary-dark, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba($text-light, 0.1);
+  padding: $spacing-sm 0;
+  transition: all $transition-normal;
+
+  // Navbar fixe avec effet de transparence
+  &.navbar-scrolled {
+    background-color: rgba($primary-dark, 0.98);
+    box-shadow: $shadow-medium;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-light !important;
+    text-decoration: none;
+
+    &:hover {
+      color: $primary-red !important;
+    }
+
+    img {
+      height: 40px;
+      width: auto;
+    }
+  }
+
+  // Menu principal
+  .navbar-nav {
+    .nav-link {
+      color: $text-light !important;
+      font-weight: 500;
+      padding: $spacing-sm $spacing-md !important;
+      transition: all $transition-fast;
+      border-radius: $border-radius-sm;
+
+      &:hover {
+        color: $primary-red !important;
+        background-color: rgba($primary-red, 0.1);
+      }
+
+      &.active {
+        color: $primary-red !important;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Menu utilisateur
+  .user-zone {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    @include respond-to(mobile) {
+      flex-direction: column;
+      gap: $spacing-sm;
+      width: 100%;
+      margin-top: $spacing-md;
+    }
+  }
+
+  // Formulaire de recherche
+  .search-form {
+    position: relative;
+
+    .form-control {
+      background-color: rgba($text-light, 0.1);
+      border: 1px solid rgba($text-light, 0.2);
+      color: $text-light;
+      padding: $spacing-xs $spacing-lg $spacing-xs $spacing-sm;
+      border-radius: $border-radius-lg;
+      width: 250px;
+      transition: all $transition-normal;
+
+      &:focus {
+        background-color: rgba($text-light, 0.15);
+        border-color: $primary-red;
+        box-shadow: 0 0 0 2px rgba($primary-red, 0.25);
+        color: $text-light;
+      }
+
+      &::placeholder {
+        color: rgba($text-light, 0.6);
+      }
+
+      @include respond-to(mobile) {
+        width: 100%;
+      }
+    }
+
+    .btn-search {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: $text-muted;
+      padding: $spacing-xs;
+
+      &:hover {
+        color: $primary-red;
+      }
+    }
+  }
+
+  // Menu profil
+  .profile-menu {
+    position: relative;
+
+    .dropdown-toggle {
+      background: none;
+      border: none;
+      padding: 0;
+
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        transition: border-color $transition-fast;
+      }
+
+      &:hover img {
+        border-color: $primary-red;
+      }
+    }
+
+    .dropdown-menu {
+      background-color: $card-bg;
+      border: 1px solid rgba($text-light, 0.1);
+      border-radius: $border-radius-md;
+      box-shadow: $shadow-heavy;
+      margin-top: $spacing-xs;
+
+      .dropdown-item {
+        color: $text-light;
+        padding: $spacing-sm $spacing-md;
+        transition: all $transition-fast;
+
+        &:hover {
+          background-color: rgba($primary-red, 0.1);
+          color: $primary-red;
+        }
+      }
+    }
+  }
+
+  // Bouton hamburger personnalisé
+  .navbar-toggler {
+    border: none;
+    padding: 0;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+      background-image: none;
+      width: 25px;
+      height: 3px;
+      background-color: $text-light;
+      border-radius: 3px;
+      position: relative;
+      transition: all $transition-normal;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 3px;
+        background-color: $text-light;
+        border-radius: 3px;
+        transition: all $transition-normal;
+      }
+
+      &::before {
+        top: -8px;
+      }
+
+      &::after {
+        top: 8px;
+      }
+    }
+
+    // Animation du bouton hamburger
+    &:not(.collapsed) .navbar-toggler-icon {
+      background-color: transparent;
+
+      &::before {
+        transform: rotate(45deg);
+        top: 0;
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+        top: 0;
+      }
+    }
+  }
+
+  // Responsive collapse
+  .navbar-collapse {
+    @include respond-to(mobile) {
+      margin-top: $spacing-md;
+      padding-top: $spacing-md;
+      border-top: 1px solid rgba($text-light, 0.1);
+    }
+  }
+}
+
+// Navigation breadcrumb personnalisée
+.breadcrumb-streamflix {
+  background: none;
+  padding: $spacing-md 0;
+  margin: 0;
+
+  .breadcrumb-item {
+    color: $text-muted;
+
+    &.active {
+      color: $text-light;
+    }
+
+    a {
+      color: $text-muted;
+      text-decoration: none;
+
+      &:hover {
+        color: $primary-red;
+      }
+    }
+
+    &::before {
+      content: "›";
+      color: $text-muted;
+    }
+  }
+}

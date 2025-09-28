@@ -1,0 +1,141 @@
+// ==========================================================================
+// STREAMFLIX - FICHIER SASS PRINCIPAL
+// Architecture 7-1 Pattern
+// ==========================================================================
+
+// 1. UTILS - Variables et mixins d'abord
+@import 'utils/variables';
+@import 'utils/mixins';
+
+// 2. BASE - Styles de base et reset
+@import 'base/reset';
+@import 'base/typography';
+
+// 3. COMPONENTS - Composants réutilisables
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/navigation';
+
+// 4. LAYOUT - Composants de mise en page
+@import 'layout/header';
+@import 'layout/hero';
+@import 'layout/footer';
+
+// 5. PAGES - Styles spécifiques aux pages
+@import 'pages/home';
+
+// 7. THEMES (optionnel)
+// Variations de thème - pour le bonus challenge
+
+// ==========================================================================
+// STYLES GLOBAUX ADDITIONNELS
+// ==========================================================================
+
+// Smooth scrolling global
+html {
+  scroll-behavior: smooth;
+}
+
+// Container personnalisé StreamFlix
+.container-streamflix {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include respond-to(mobile) {
+    padding: 0 $spacing-sm;
+  }
+}
+
+// Classes utilitaires personnalisées
+.text-gradient {
+  background: linear-gradient(135deg, $primary-red, $accent-blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, $primary-red, darken($primary-red, 20%));
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(135deg, $primary-dark, lighten($primary-dark, 10%));
+}
+
+// Animations personnalisées
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Classes d'animation
+.animate-pulse { animation: pulse 2s infinite; }
+.animate-slide-left { animation: slideInFromLeft 0.6s ease-out; }
+.animate-slide-right { animation: slideInFromRight 0.6s ease-out; }
+
+// Focus visible amélioré
+*:focus-visible {
+  outline: 2px solid $accent-blue;
+  outline-offset: 2px;
+  border-radius: $border-radius-sm;
+}
+
+// Selection de texte personnalisée
+::selection {
+  background-color: rgba($primary-red, 0.3);
+  color: $text-light;
+}
+
+// Scrollbar personnalisée (WebKit uniquement)
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $primary-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $secondary-gray;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $primary-red;
+  }
+}
+
+// Print styles
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  .navbar, .hero-actions, .signup-section {
+    display: none !important;
+  }
+}

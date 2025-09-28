@@ -1,0 +1,140 @@
+// ==========================================================================
+// TYPOGRAPHIE STREAMFLIX
+// ==========================================================================
+
+// Import des polices (à ajouter dans le HTML plus tard)
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Configuration de base
+body {
+  font-family: 'Inter', $font-secondary;
+  font-size: $font-size-base;
+  font-weight: 400;
+  line-height: 1.6;
+  color: $text-light;
+}
+
+// Hiérarchie des titres
+h1, .h1 {
+  font-size: $font-size-h1;
+  font-weight: 700;
+  line-height: 1.2;
+  color: $text-light;
+  margin-bottom: $spacing-lg;
+
+  @include respond-to(mobile) {
+    font-size: 2rem;
+  }
+}
+
+h2, .h2 {
+  font-size: $font-size-h2;
+  font-weight: 600;
+  line-height: 1.3;
+  color: $text-light;
+  margin-bottom: $spacing-md;
+
+  @include respond-to(mobile) {
+    font-size: 1.75rem;
+  }
+}
+
+h3, .h3 {
+  font-size: $font-size-h3;
+  font-weight: 600;
+  line-height: 1.4;
+  color: $text-light;
+  margin-bottom: $spacing-md;
+
+  @include respond-to(mobile) {
+    font-size: 1.5rem;
+  }
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $text-light;
+  margin-bottom: $spacing-sm;
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: $text-light;
+  margin-bottom: $spacing-sm;
+}
+
+h6, .h6 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: $text-light;
+  margin-bottom: $spacing-sm;
+}
+
+// Paragraphes
+p {
+  margin-bottom: $spacing-md;
+  color: $text-light;
+
+  &.lead {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  &.small {
+    font-size: $font-size-small;
+    color: $text-muted;
+  }
+}
+
+// Listes
+ul, ol {
+  padding-left: $spacing-lg;
+  margin-bottom: $spacing-md;
+
+  li {
+    margin-bottom: $spacing-xs;
+  }
+}
+
+// Citations
+blockquote {
+  border-left: 4px solid $primary-red;
+  padding-left: $spacing-md;
+  margin: $spacing-lg 0;
+  font-style: italic;
+  color: $text-muted;
+}
+
+// Code
+code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: $border-radius-sm;
+  font-size: 0.875rem;
+  color: $accent-blue;
+}
+
+// Classes utilitaires de typographie
+.text-primary { color: $primary-red !important; }
+.text-secondary { color: $secondary-gray !important; }
+.text-muted { color: $text-muted !important; }
+.text-light { color: $text-light !important; }
+.text-accent { color: $accent-blue !important; }
+
+.fw-light { font-weight: 300 !important; }
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+
+.text-uppercase { text-transform: uppercase !important; }
+.text-lowercase { text-transform: lowercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+// Classes pour la troncature du texte
+.text-truncate-1 { @include text-truncate(1); }
+.text-truncate-2 { @include text-truncate(2); }
+.text-truncate-3 { @include text-truncate(3); }

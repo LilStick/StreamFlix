@@ -1,0 +1,148 @@
+// ==========================================================================
+// HEADER STREAMFLIX
+// ==========================================================================
+
+header[role="banner"] {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  width: 100%;
+}
+
+// Logo dans le header
+.navbar-brand {
+  h1 {
+    margin: 0;
+
+    a {
+      display: inline-block;
+      transition: transform $transition-fast;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      img {
+        height: 50px;
+        width: auto;
+
+        @include respond-to(mobile) {
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+
+// Navigation principale
+.navbar {
+  .navbar-nav {
+    @include respond-to(desktop) {
+      margin-left: $spacing-xl;
+    }
+
+    .nav-item {
+      margin: 0 $spacing-xs;
+    }
+  }
+}
+
+// Zone utilisateur responsive
+.user-zone {
+  .search-form {
+    form[role="search"] {
+      position: relative;
+
+      input[type="search"] {
+        padding-right: 45px;
+
+        &::-webkit-search-cancel-button {
+          -webkit-appearance: none;
+          appearance: none;
+        }
+      }
+
+      button[type="submit"] {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: $text-muted;
+        font-size: 1.2rem;
+
+        &:hover {
+          color: $primary-red;
+        }
+      }
+    }
+  }
+}
+
+// Menu profil dropdown
+.profile-menu {
+  button[aria-expanded] {
+    background: none;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all $transition-fast;
+
+    &:hover {
+      box-shadow: 0 0 0 2px $primary-red;
+    }
+
+    img {
+      display: block;
+      transition: transform $transition-fast;
+    }
+
+    &:hover img {
+      transform: scale(1.1);
+    }
+  }
+
+  ul[role="menu"] {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: $card-bg;
+    border: 1px solid rgba($text-light, 0.1);
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-heavy;
+    padding: $spacing-xs 0;
+    margin-top: $spacing-xs;
+    min-width: 150px;
+    z-index: $z-dropdown;
+
+    &[aria-hidden="true"] {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+    }
+
+    &[aria-hidden="false"] {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    li {
+      list-style: none;
+
+      a[role="menuitem"] {
+        display: block;
+        padding: $spacing-xs $spacing-md;
+        color: $text-light;
+        text-decoration: none;
+        transition: all $transition-fast;
+
+        &:hover {
+          background-color: rgba($primary-red, 0.1);
+          color: $primary-red;
+        }
+      }
+    }
+  }
+}

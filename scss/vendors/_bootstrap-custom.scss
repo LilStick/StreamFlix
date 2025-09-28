@@ -1,0 +1,106 @@
+// ==========================================================================
+// PERSONNALISATION BOOTSTRAP POUR STREAMFLIX
+// ==========================================================================
+
+// Import des variables par défaut de Bootstrap
+@import "bootstrap/scss/functions";
+
+// Personnalisation des variables Bootstrap avec les couleurs StreamFlix
+$primary: #e50914;
+$secondary: #564d4d;
+$dark: #221f1f;
+$light: #ffffff;
+$info: #0071eb;
+$success: #46d369;
+$warning: #f5c518;
+$danger: #e50914;
+
+// Couleurs de body et de background
+$body-bg: #141414;
+$body-color: #ffffff;
+
+// Personnalisation de la typographie
+$font-family-base: 'Netflix Sans', 'Helvetica Neue', sans-serif;
+$font-size-base: 1rem;
+$font-weight-base: 400;
+$line-height-base: 1.6;
+
+// Personnalisation des liens
+$link-color: #ffffff;
+$link-hover-color: #e50914;
+$link-decoration: none;
+
+// Personnalisation des breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// Personnalisation des containers
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+);
+
+// Personnalisation des composants
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+
+// Personnalisation des boutons
+$btn-padding-y: 0.75rem;
+$btn-padding-x: 1.5rem;
+$btn-font-weight: 600;
+$btn-border-radius: 8px;
+
+// Personnalisation des cartes
+$card-bg: #2f2f2f;
+$card-border-color: transparent;
+$card-border-radius: 12px;
+
+// Personnalisation de la navbar
+$navbar-dark-color: rgba(255, 255, 255, 0.9);
+$navbar-dark-hover-color: #e50914;
+$navbar-dark-active-color: #e50914;
+$navbar-dark-brand-color: #ffffff;
+$navbar-dark-brand-hover-color: #e50914;
+
+// Import des variables Bootstrap
+@import "bootstrap/scss/variables";
+
+// Import des mixins Bootstrap
+@import "bootstrap/scss/mixins";
+
+// Import sélectif des composants Bootstrap nécessaires
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas";
+@import "bootstrap/scss/placeholders";
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/utilities/api";

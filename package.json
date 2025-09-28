@@ -1,0 +1,26 @@
+{
+  "name": "streamflix",
+  "version": "1.0.0",
+  "description": "Plateforme de streaming StreamFlix avec Bootstrap 5 et SASS",
+  "homepage": "https://github.com/LilStick/StreamFlix#readme",
+  "bugs": {
+    "url": "https://github.com/LilStick/StreamFlix/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LilStick/StreamFlix.git"
+  },
+  "license": "MIT",
+  "author": "StreamFlix Team",
+  "type": "commonjs",
+  "main": "index.html",
+  "scripts": {
+    "sass": "sass --watch scss:css --style expanded",
+    "sass-compressed": "sass scss:css --style compressed",
+    "build": "sass scss:css --style compressed"
+  },
+  "keywords": ["streaming", "bootstrap", "sass", "frontend"],
+  "devDependencies": {
+    "sass": "^1.93.2"
+  }
+}

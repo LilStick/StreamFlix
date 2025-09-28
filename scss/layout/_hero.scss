@@ -1,0 +1,172 @@
+// ==========================================================================
+// SECTION HERO STREAMFLIX
+// ==========================================================================
+
+.hero {
+  position: relative;
+  min-height: 70vh;
+  background: linear-gradient(
+    135deg,
+    rgba($primary-dark, 0.8) 0%,
+    rgba($primary-red, 0.1) 100%
+  ),
+  url('../images/films/inception.webp') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  color: $text-light;
+  overflow: hidden;
+
+  @include respond-to(mobile) {
+    min-height: 60vh;
+  }
+
+  // Overlay pour améliorer la lisibilité
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to right,
+      rgba($primary-dark, 0.9) 0%,
+      rgba($primary-dark, 0.6) 50%,
+      transparent 100%
+    );
+    z-index: 1;
+  }
+
+  // Contenu du hero
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    padding: $spacing-xl;
+
+    @include respond-to(mobile) {
+      padding: $spacing-lg $spacing-md;
+      max-width: 100%;
+    }
+
+    // Titre principal
+    h2 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: $spacing-md;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+      @include respond-to(mobile) {
+        font-size: 2.5rem;
+      }
+
+      @include respond-to(tablet) {
+        font-size: 3rem;
+      }
+    }
+  }
+
+  // Métadonnées du film
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+    flex-wrap: wrap;
+
+    .year, .duration {
+      color: $text-muted;
+      font-weight: 500;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+
+      .stars {
+        color: $warning-yellow;
+        font-size: 1.2rem;
+      }
+
+      .rating-text {
+        color: $text-light;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Genres du film
+  .hero-genres {
+    display: flex;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+    flex-wrap: wrap;
+
+    .genre {
+      background-color: rgba($primary-red, 0.8);
+      color: $text-light;
+      padding: 0.5rem 1rem;
+      border-radius: $border-radius-lg;
+      font-size: $font-size-small;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 2px solid transparent;
+      transition: all $transition-fast;
+
+      &:hover {
+        background-color: $primary-red;
+        border-color: $text-light;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Description du film
+  .hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: $spacing-xl;
+    color: rgba($text-light, 0.9);
+    max-width: 500px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+
+    @include respond-to(mobile) {
+      font-size: 1rem;
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  // Actions du hero (boutons)
+  .hero-actions {
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+
+    @include respond-to(mobile) {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// Animation d'apparition du contenu
+.hero-content {
+  @include fade-in(0.8s, 0.2s);
+}
+
+// Effet parallax léger (optionnel)
+@media (prefers-reduced-motion: no-preference) {
+  .hero {
+    background-attachment: fixed;
+
+    @include respond-to(mobile) {
+      background-attachment: scroll; // Désactivé sur mobile pour les performances
+    }
+  }
+}

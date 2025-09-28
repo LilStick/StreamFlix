@@ -1,0 +1,199 @@
+// ==========================================================================
+// CARTES STREAMFLIX
+// ==========================================================================
+
+// Carte de film principale
+.movie-card {
+  @include movie-card;
+  cursor: pointer;
+  position: relative;
+
+  // Animation de survol
+  &:hover {
+    .movie-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-img-top {
+      transform: scale(1.05);
+    }
+  }
+
+  // Image de la carte
+  .card-img-top {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+
+    @include respond-to(mobile) {
+      height: 250px;
+    }
+  }
+
+  // Informations du film
+  .movie-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95));
+    padding: $spacing-lg $spacing-md $spacing-md;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all $transition-normal;
+
+    @include respond-to(mobile) {
+      opacity: 1;
+      transform: translateY(0);
+      position: static;
+      background: $card-bg;
+    }
+  }
+
+  // Titre du film
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: $spacing-xs;
+    color: $text-light;
+    @include text-truncate(1);
+  }
+
+  // Métadonnées du film
+  .movie-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xs;
+    font-size: $font-size-small;
+    color: $text-muted;
+    flex-wrap: wrap;
+
+    .year, .duration {
+      color: $text-muted;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      .stars {
+        color: $warning-yellow;
+        font-size: 0.9rem;
+      }
+
+      span:last-child {
+        color: $text-light;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Genres
+  .genres {
+    display: flex;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+
+    .genre {
+      background-color: rgba($primary-red, 0.2);
+      color: $primary-red;
+      padding: 0.25rem 0.5rem;
+      border-radius: $border-radius-sm;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid rgba($primary-red, 0.3);
+    }
+  }
+}
+
+// Grille de cartes
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: $spacing-lg;
+  margin-top: $spacing-lg;
+
+  @include respond-to(mobile) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: $spacing-md;
+  }
+
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+// Version Bootstrap de la carte
+.card-streamflix {
+  background-color: $card-bg;
+  border: none;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-heavy;
+  }
+
+  .card-img-top {
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: transform $transition-normal;
+  }
+
+  &:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    background-color: $card-bg;
+    color: $text-light;
+
+    .card-title {
+      color: $text-light;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: $spacing-sm;
+      @include text-truncate(1);
+    }
+
+    .card-text {
+      color: $text-muted;
+      font-size: $font-size-small;
+      @include text-truncate(2);
+    }
+  }
+}
+
+// Badge pour les nouveautés
+.badge-new {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  background-color: $primary-red;
+  color: $text-light;
+  padding: 0.25rem 0.5rem;
+  border-radius: $border-radius-sm;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// Badge pour les notes
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: rgba($warning-yellow, 0.2);
+  color: $warning-yellow;
+  padding: 0.25rem 0.5rem;
+  border-radius: $border-radius-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

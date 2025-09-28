@@ -1,0 +1,83 @@
+// ==========================================================================
+// VARIABLES STREAMFLIX
+// ==========================================================================
+
+// Palette couleurs StreamFlix améliorée
+$primary-red: #dc2626;        // Rouge Netflix plus vif
+$primary-red-light: #ef4444;  // Rouge clair pour les hovers
+$primary-red-dark: #b91c1c;   // Rouge foncé pour les états actifs
+
+$primary-dark: #0f0f0f;       // Noir plus profond
+$secondary-dark: #1a1a1a;     // Gris très foncé
+$tertiary-dark: #262626;      // Gris foncé pour les cartes
+
+$secondary-gray: #525252;     // Gris équilibré
+$light-gray: #737373;         // Gris clair pour le texte
+$border-gray: #404040;        // Gris pour les bordures
+
+$text-light: #f5f5f5;         // Blanc cassé plus doux
+$text-primary: #ffffff;       // Blanc pur pour les titres
+$text-muted: #a3a3a3;         // Gris clair pour le texte secondaire
+$text-secondary: #d4d4d8;     // Gris très clair
+
+$accent-blue: #3b82f6;        // Bleu moderne
+$accent-purple: #8b5cf6;      // Violet accent
+$accent-orange: #f97316;      // Orange accent
+
+// Couleurs supplémentaires
+$dark-bg: #080808;            // Arrière-plan principal ultra-sombre
+$card-bg: #1c1c1c;           // Fond des cartes plus contrasté
+$hover-bg: #2a2a2a;          // Fond de survol
+$active-bg: #374151;         // Fond actif
+
+$success-green: #22c55e;      // Vert succès moderne
+$warning-yellow: #eab308;     // Jaune attention
+$error-red: #ef4444;          // Rouge erreur
+$info-cyan: #06b6d4;          // Cyan information
+
+// Typographie
+$font-primary: 'Netflix Sans', 'Helvetica Neue', sans-serif;
+$font-secondary: 'Arial', sans-serif;
+$font-size-base: 16px;
+$font-size-large: 24px;
+$font-size-small: 14px;
+$font-size-h1: 3rem;
+$font-size-h2: 2.5rem;
+$font-size-h3: 2rem;
+
+// Espacements
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+
+// Breakpoints personnalisés
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 992px;
+$large-desktop: 1200px;
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Border radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+// Box shadows
+$shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+$shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.3);
+
+// Z-index
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;

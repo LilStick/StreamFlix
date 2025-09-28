@@ -1,0 +1,237 @@
+// ==========================================================================
+// PAGE D'ACCUEIL STREAMFLIX
+// ==========================================================================
+
+// Contenu principal
+main[role="main"] {
+  min-height: calc(100vh - 80px); // Ajusté selon la hauteur du header
+}
+
+// Section des grilles de contenu
+.content-grids {
+  padding: $spacing-xl 0;
+
+  .movie-grid {
+    margin-bottom: $spacing-xl * 1.5;
+
+    // Titre de section
+    h2 {
+      font-size: $font-size-h2;
+      font-weight: 600;
+      margin-bottom: $spacing-lg;
+      color: $text-light;
+      position: relative;
+      padding-left: $spacing-md;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 30px;
+        background-color: $primary-red;
+        border-radius: 2px;
+      }
+
+      @include respond-to(mobile) {
+        font-size: 1.75rem;
+        padding-left: $spacing-sm;
+
+        &::before {
+          width: 3px;
+          height: 25px;
+        }
+      }
+    }
+  }
+}
+
+// Section d'inscription
+.signup-section {
+  background: linear-gradient(
+    135deg,
+    rgba($primary-red, 0.1) 0%,
+    rgba($primary-dark, 0.8) 100%
+  );
+  padding: $spacing-xl * 2;
+  border-radius: $border-radius-lg;
+  margin: $spacing-xl * 2 0;
+  text-align: center;
+
+  @include respond-to(mobile) {
+    padding: $spacing-xl;
+    margin: $spacing-xl 0;
+  }
+
+  h2 {
+    font-size: $font-size-h2;
+    margin-bottom: $spacing-md;
+    color: $text-light;
+
+    @include respond-to(mobile) {
+      font-size: 2rem;
+    }
+  }
+
+  > p {
+    font-size: 1.125rem;
+    color: $text-muted;
+    margin-bottom: $spacing-xl;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include respond-to(mobile) {
+      font-size: 1rem;
+      margin-bottom: $spacing-lg;
+    }
+  }
+}
+
+// Formulaire d'inscription
+.signup-form {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+
+  .form-group {
+    margin-bottom: $spacing-lg;
+
+    label {
+      display: block;
+      margin-bottom: $spacing-xs;
+      color: $text-light;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: $spacing-md;
+      background-color: rgba($text-light, 0.1);
+      border: 2px solid rgba($text-light, 0.2);
+      border-radius: $border-radius-md;
+      color: $text-light;
+      font-size: $font-size-base;
+      transition: all $transition-normal;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-red;
+        background-color: rgba($text-light, 0.15);
+        box-shadow: 0 0 0 3px rgba($primary-red, 0.2);
+      }
+
+      &::placeholder {
+        color: rgba($text-light, 0.5);
+      }
+
+      &:invalid:not(:placeholder-shown) {
+        border-color: $warning-yellow;
+      }
+
+      &:valid:not(:placeholder-shown) {
+        border-color: $success-green;
+      }
+    }
+
+    // Messages d'aide et d'erreur
+    .help-text {
+      display: block;
+      margin-top: $spacing-xs;
+      font-size: $font-size-small;
+      color: $text-muted;
+    }
+
+    .error-message {
+      display: block;
+      margin-top: $spacing-xs;
+      font-size: $font-size-small;
+      color: $warning-yellow;
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  // Groupe checkbox
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+
+    input[type="checkbox"] {
+      width: auto;
+      margin-top: 0.25rem;
+      accent-color: $primary-red;
+    }
+
+    label {
+      margin-bottom: 0;
+      font-size: $font-size-small;
+      line-height: 1.5;
+
+      a {
+        color: $primary-red;
+        text-decoration: underline;
+
+        &:hover {
+          color: lighten($primary-red, 10%);
+        }
+      }
+    }
+  }
+
+  // Bouton de soumission
+  .btn-primary {
+    @include streamflix-button($primary-red, $text-light, darken($primary-red, 10%));
+    width: 100%;
+    padding: $spacing-md $spacing-lg;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: $spacing-md;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+  }
+}
+
+// Animations pour les sections
+.movie-grid {
+  @include fade-in(0.8s, 0.2s);
+
+  &:nth-child(2) { animation-delay: 0.4s; }
+  &:nth-child(3) { animation-delay: 0.6s; }
+}
+
+.signup-section {
+  @include fade-in(1s, 0.8s);
+}
+
+// États de chargement
+.loading {
+  .movie-card {
+    background: linear-gradient(
+      90deg,
+      $card-bg 25%,
+      lighten($card-bg, 10%) 50%,
+      $card-bg 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+
+    .movie-info {
+      opacity: 0.3;
+    }
+  }
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

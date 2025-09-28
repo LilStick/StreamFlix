@@ -1,0 +1,76 @@
+// ==========================================================================
+// RESET ET NORMALISATION
+// ==========================================================================
+
+// Reset personnalisé pour StreamFlix
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $dark-bg;
+  color: $text-light;
+  font-family: $font-primary;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+// Liens et focus
+a {
+  color: $text-light;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $primary-red;
+  }
+
+  &:focus {
+    outline: 2px solid $accent-blue;
+    outline-offset: 2px;
+  }
+}
+
+// Images responsive par défaut
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Boutons et inputs
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+// Classes utilitaires pour l'accessibilité
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// Smooth scrolling pour les ancres
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
