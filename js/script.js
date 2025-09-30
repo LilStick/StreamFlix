@@ -1,13 +1,331 @@
 /**
  * STREAMFLIX - JavaScript Interactif
- * Fonctionnalités Bootstrap et animations personnalisées
+ * Fonctionnalités Bootstrap, animations personnalisées et exercices progressifs
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎬 StreamFlix - Chargement des exercices JavaScript');
 
     // ==========================================================================
-    // NAVIGATION SCROLLED EFFECT
+    // EXERCICE 1 : AFFICHER/MASQUER SECTIONS
     // ==========================================================================
+    console.log('📋 Exercice 1 : Initialisation des boutons masquer/afficher');
+
+    // Sélectionner toutes les sections de films
+    const movieSections = document.querySelectorAll('.movie-grid');
+
+    movieSections.forEach(function(section) {
+        // Créer un bouton pour chaque section
+        const toggleButton = document.createElement('button');
+        toggleButton.textContent = 'Masquer la section';
+        toggleButton.classList.add('section-toggle');
+
+        // Insérer le bouton avant la section
+        section.parentNode.insertBefore(toggleButton, section);
+
+        // Ajouter l'événement click
+        toggleButton.addEventListener('click', function() {
+            const movieGrid = this.nextElementSibling; // La section suivante
+
+            if (movieGrid.classList.contains('hidden')) {
+                movieGrid.classList.remove('hidden');
+                this.textContent = 'Masquer la section';
+            } else {
+                movieGrid.classList.add('hidden');
+                this.textContent = 'Afficher la section';
+            }
+
+            console.log('Section toggle:', movieGrid.classList.contains('hidden') ? 'masquée' : 'affichée');
+        });
+    });
+
+    // ==========================================================================
+    // EXERCICE 2 : COMPTEUR DE FILMS
+    // ==========================================================================
+    console.log('📊 Exercice 2 : Comptage des films');
+
+    // Compter tous les films (cartes de films)
+    const allMovieCards = document.querySelectorAll('.card-streamflix');
+    const movieCount = allMovieCards.length;
+
+    // Créer l'élément compteur
+    const counterElement = document.createElement('div');
+    counterElement.classList.add('film-counter');
+    counterElement.innerHTML = `
+        <h3>📊 Catalogue StreamFlix</h3>
+        <p><strong>${movieCount} films</strong> disponibles</p>
+    `;
+
+    // Ajouter le compteur dans le footer
+    const footer = document.querySelector('footer .container');
+    if (footer) {
+        footer.insertBefore(counterElement, footer.firstChild);
+    }
+
+    console.log(`Nombre total de films: ${movieCount}`);
+
+    // ==========================================================================
+    // EXERCICE 3 : MARQUER FILMS COMME "VUS"
+    // ==========================================================================
+    console.log('✅ Exercice 3 : Système de films vus');
+
+    // Ajouter event listeners sur toutes les cartes de films
+    allMovieCards.forEach(function(card, index) {
+        card.addEventListener('click', function(event) {
+            // Empêcher la propagation si on clique sur un bouton
+            if (event.target.closest('button')) return;
+
+            // Toggle de la classe 'watched'
+            this.classList.toggle('watched');
+
+            // Récupérer le titre du film
+            const titleElement = this.querySelector('.card-title, h3, img');
+            const title = titleElement ?
+                (titleElement.textContent || titleElement.alt || `Film ${index + 1}`) :
+                `Film ${index + 1}`;
+
+            const isWatched = this.classList.contains('watched');
+            console.log(`Film "${title}" marqué comme:`, isWatched ? 'VU ✓' : 'NON VU');
+
+            // Effet visuel supplémentaire
+            if (isWatched) {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+            }
+        });
+    });
+
+    // ==========================================================================
+    // EXERCICE 4 : RECHERCHE SIMPLE
+    // ==========================================================================
+    console.log('🔍 Exercice 4 : Système de recherche');
+
+    const searchInputElement = document.querySelector('#search-input');
+    let noResultsMessage = null;
+
+    if (searchInputElement) {
+        // Créer le message "Aucun résultat"
+        noResultsMessage = document.createElement('div');
+        noResultsMessage.classList.add('no-results');
+        noResultsMessage.style.display = 'none';
+        noResultsMessage.innerHTML = `
+            <h3>🔍 Aucun résultat trouvé</h3>
+            <p>Essayez avec d'autres mots-clés comme "Dark Knight", "Matrix", "Inception"...</p>
+        `;
+
+        // Insérer après les sections de films
+        const contentGrids = document.querySelector('.content-grids');
+        if (contentGrids) {
+            contentGrids.appendChild(noResultsMessage);
+        }
+
+        searchInputElement.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            console.log('Recherche:', searchTerm);
+
+            let visibleCount = 0;
+
+            // Filtrer les films
+            allMovieCards.forEach(function(card) {
+                // Chercher dans le titre (img alt, h3, ou données du film)
+                const img = card.querySelector('img');
+                const titleElement = card.querySelector('.card-title, h3');
+
+                let title = '';
+                if (img && img.alt) title += img.alt.toLowerCase() + ' ';
+                if (titleElement) title += titleElement.textContent.toLowerCase() + ' ';
+
+                // Chercher aussi dans les badges de genre
+                const badges = card.querySelectorAll('.badge');
+                badges.forEach(badge => {
+                    title += badge.textContent.toLowerCase() + ' ';
+                });
+
+                if (searchTerm === '' || title.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Afficher/masquer le message "Aucun résultat"
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+
+            console.log(`Films trouvés: ${visibleCount}`);
+        });
+    }
+
+    // ==========================================================================
+    // EXERCICE 5 : MODAL SIMPLE
+    // ==========================================================================
+    console.log('� Exercice 5 : Système de modal');
+
+    const modal = document.querySelector('#modal');
+    const modalBody = document.querySelector('#modal-body');
+    const closeButton = document.querySelector('.modal-close');
+
+    // Fonction pour ouvrir la modal
+    function openModal(title, imageUrl, genres) {
+        if (!modal || !modalBody) return;
+
+        modalBody.innerHTML = `
+            <div class="modal-film-info">
+                <h2>🎬 ${title}</h2>
+                ${imageUrl ? `<img src="${imageUrl}" alt="${title}" style="max-width: 200px; border-radius: 8px; margin: 1rem 0;">` : ''}
+                <div class="modal-film-meta">
+                    ${genres ? genres.map(genre => `<span class="badge bg-danger">${genre}</span>`).join('') : ''}
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger btn-sm">▶️ Regarder</button>
+                    <button class="btn btn-outline-light btn-sm">+ Ma Liste</button>
+                    <button class="btn btn-secondary btn-sm">ℹ️ Plus d'infos</button>
+                </div>
+            </div>
+        `;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Empêcher le scroll
+    }
+
+    // Fonction pour fermer la modal
+    function closeModal() {
+        if (!modal) return;
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restaurer le scroll
+    }
+
+    // Event listeners pour la modal
+    if (closeButton) {
+        closeButton.addEventListener('click', closeModal);
+    }
+
+    // Fermer au clic en dehors de la modal
+    if (modal) {
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    }
+
+    // Fermer avec la touche Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            closeModal();
+        }
+    });
+
+    // Ajouter les event listeners sur les cartes de films pour la modal
+    allMovieCards.forEach(function(card, index) {
+        // Créer un bouton "Voir détails" pour éviter le conflit avec l'exercice 3
+        const detailsButton = document.createElement('button');
+        detailsButton.textContent = '👁️ Détails';
+        detailsButton.classList.add('btn', 'btn-primary', 'btn-sm', 'mt-2');
+        detailsButton.style.cssText = 'position: absolute; top: 10px; left: 10px; z-index: 15; font-size: 0.7rem; padding: 0.25rem 0.5rem; opacity: 0.9; transition: all 0.3s ease;';
+
+        card.style.position = 'relative';
+        card.appendChild(detailsButton);
+
+        detailsButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Empêcher le déclenchement de l'exercice 3
+
+            // Récupérer les infos du film
+            const img = card.querySelector('img');
+            const titleElement = card.querySelector('.card-title, h3');
+            const badges = card.querySelectorAll('.badge');
+
+            const title = titleElement ?
+                titleElement.textContent :
+                (img && img.alt ? img.alt : `Film ${index + 1}`);
+
+            const imageUrl = img ? img.src : null;
+            const genres = Array.from(badges).map(badge => badge.textContent);
+
+            openModal(title, imageUrl, genres);
+            console.log('Modal ouverte pour:', title);
+        });
+    });
+
+    // ==========================================================================
+    // EXERCICE 6 : CHANGEMENT DE THÈME (BONUS)
+    // ==========================================================================
+    console.log('� Exercice 6 : Système de thème');
+
+    const themeToggleButton = document.getElementById('theme-toggle');
+
+    if (themeToggleButton) {
+        // Initialiser le thème (par défaut : mode sombre)
+        function initTheme() {
+            const savedTheme = localStorage.getItem('streamflix-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'light' || (savedTheme === null && !prefersDark)) {
+                // Mode clair
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                themeToggleButton.textContent = '🌓';
+                themeToggleButton.title = 'Passer en mode sombre';
+            } else {
+                // Mode sombre (par défaut StreamFlix)
+                document.body.classList.add('dark-theme');
+                document.body.classList.remove('light-theme');
+                themeToggleButton.textContent = '☀️';
+                themeToggleButton.title = 'Passer en mode clair';
+            }
+        }
+
+        // Initialiser le thème au chargement
+        initTheme();
+
+        themeToggleButton.addEventListener('click', function() {
+            const isCurrentlyDark = document.body.classList.contains('dark-theme');
+
+            if (isCurrentlyDark) {
+                // Passer en mode clair
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                this.textContent = '🌓';
+                this.title = 'Passer en mode sombre';
+                localStorage.setItem('streamflix-theme', 'light');
+                console.log('� Thème changé: MODE CLAIR activé');
+            } else {
+                // Passer en mode sombre
+                document.body.classList.add('dark-theme');
+                document.body.classList.remove('light-theme');
+                this.textContent = '☀️';
+                this.title = 'Passer en mode clair';
+                localStorage.setItem('streamflix-theme', 'dark');
+                console.log('🌙 Thème changé: MODE SOMBRE activé');
+            }
+
+            // Effet visuel sur le bouton
+            this.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 300);
+        });
+
+        // Écouter les changements de préférence système
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('streamflix-theme')) {
+                initTheme();
+                console.log('🔄 Thème ajusté selon les préférences système');
+            }
+        });
+    }
+
+    // ==========================================================================
+    // FONCTIONNALITÉS STREAMFLIX EXISTANTES (CONSERVÉES)
+    // ==========================================================================
+    console.log('🎬 Chargement des fonctionnalités StreamFlix existantes...');
+
+    // NAVIGATION SCROLLED EFFECT
     const navbar = document.querySelector('.navbar-streamflix');
     let scrollTimer = null;
 
@@ -27,9 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // ==========================================================================
-    // ANIMATION DES CARTES AU SCROLL
-    // ==========================================================================
+    // ANIMATION DES CARTES AU SCROLL (adaptée pour éviter les conflits)
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -42,19 +358,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                     entry.target.classList.add('animate-slide-left');
-                }, index * 100); // Délai échelonné pour effet cascade
+                }, index * 100);
 
                 cardObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Appliquer l'animation aux cartes
+    // Appliquer l'animation aux cartes (seulement si pas déjà animées)
     document.querySelectorAll('.card-streamflix').forEach(function(card, index) {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        cardObserver.observe(card);
+        if (!card.style.opacity) {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            cardObserver.observe(card);
+        }
     });
 
     // ==========================================================================
@@ -109,16 +427,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     })();
 
-    // ==========================================================================
-    // RECHERCHE INTERACTIVE
-    // ==========================================================================
-    const searchInput = document.getElementById('search-input');
+    // RECHERCHE INTERACTIVE EXISTANTE (amélioration de celle des exercices)
+    const originalSearchInput = document.getElementById('search-input');
     const searchSuggestions = createSearchSuggestions();
 
-    if (searchInput) {
-        searchInput.addEventListener('input', handleSearch);
-        searchInput.addEventListener('focus', showSuggestions);
-        searchInput.addEventListener('blur', hideSuggestions);
+    if (originalSearchInput && !searchInputElement) {
+        originalSearchInput.addEventListener('input', handleSearchAdvanced);
+        originalSearchInput.addEventListener('focus', showSuggestions);
+        originalSearchInput.addEventListener('blur', hideSuggestions);
     }
 
     function createSearchSuggestions() {
@@ -138,8 +454,8 @@ document.addEventListener('DOMContentLoaded', function() {
             item.style.cursor = 'pointer';
 
             item.addEventListener('click', () => {
-                if (searchInput) {
-                    searchInput.value = movie;
+                if (originalSearchInput) {
+                    originalSearchInput.value = movie;
                     hideSuggestions();
                 }
             });
@@ -155,14 +471,14 @@ document.addEventListener('DOMContentLoaded', function() {
             suggestions.appendChild(item);
         });
 
-        if (searchInput?.parentNode) {
-            searchInput.parentNode.appendChild(suggestions);
+        if (originalSearchInput?.parentNode) {
+            originalSearchInput.parentNode.appendChild(suggestions);
         }
 
         return suggestions;
     }
 
-    function handleSearch(event) {
+    function handleSearchAdvanced(event) {
         const query = event.target.value.toLowerCase();
         const suggestions = searchSuggestions.querySelectorAll('.suggestion-item');
 
@@ -192,121 +508,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     }
 
-    // ==========================================================================
-    // TOOLTIPS BOOTSTRAP
-    // ==========================================================================
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    const tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
+    // Nettoyage des duplications - les fonctionnalités sont intégrées ci-dessus
 
-    // ==========================================================================
-    // CARTES INTERACTIVES
-    // ==========================================================================
-    document.querySelectorAll('.card-streamflix').forEach(function(card) {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
 
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = '';
-        });
-
-        // Ajout d'un effet de pulse au clic
-        card.addEventListener('click', function() {
-            this.classList.add('animate-pulse');
-            setTimeout(() => {
-                this.classList.remove('animate-pulse');
-            }, 1000);
-        });
-    });
-
-    // ==========================================================================
-    // EFFET PARALLAX HERO (si supporté)
-    // ==========================================================================
-    const hero = document.querySelector('.hero');
-
-    if (hero && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
-        }, { passive: true });
-    }
-
-    // ==========================================================================
-    // LAZY LOADING AMÉLIORÉ
-    // ==========================================================================
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.classList.add('fade-in');
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    // ==========================================================================
-    // GESTION DU THEME (BONUS)
-    // ==========================================================================
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('light-theme');
-        const isLight = document.body.classList.contains('light-theme');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    }
-
-    // Charger le thème sauvegardé
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-theme');
-    }
-
-    // ==========================================================================
-    // PERFORMANCE: DEBOUNCE UTILITY
-    // ==========================================================================
-    function debounce(func, wait, immediate) {
-        let timeout;
-        return function executedFunction() {
-            const context = this;
-            const args = arguments;
-            const later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    }
-
-    // ==========================================================================
-    // ANALYTICS & TRACKING (simulation)
-    // ==========================================================================
-    function trackEvent(category, action, label) {
-        console.log(`Analytics: ${category} - ${action} - ${label}`);
-        // Ici, vous intégreriez Google Analytics ou autre
-    }
-
-    // Tracker les clics sur les cartes de films
-    document.querySelectorAll('.card-streamflix').forEach((card, index) => {
-        card.addEventListener('click', () => {
-            const title = card.querySelector('.card-title')?.textContent || `Film ${index + 1}`;
-            trackEvent('Movie', 'Click', title);
-        });
-    });
 
 });
 
