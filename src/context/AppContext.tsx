@@ -1,41 +1,7 @@
-import React, { createContext, useState, useEffect, type ReactNode } from 'react';
-import type { Movie } from '../data/movies';
-
-interface AppContextType {
-  // Theme
-  isDarkMode: boolean;
-  toggleTheme: () => void;
-
-  // Watched movies
-  watchedMovies: Set<number>;
-  toggleWatched: (movieId: number) => void;
-
-  // Favorites
-  favoriteMovies: Set<number>;
-  toggleFavorite: (movieId: number) => void;
-
-  // User ratings
-  userRatings: Map<number, number>;
-  setUserRating: (movieId: number, rating: number) => void;
-
-  // Search
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-
-  // Modal
-  selectedMovie: Movie | null;
-  setSelectedMovie: (movie: Movie | null) => void;
-
-  // Navigation
-  currentPage: string;
-  setCurrentPage: (page: string) => void;
-
-  // Notifications
-  showNotification: (message: string, type?: 'success' | 'error' | 'info') => void;
-  notification: { message: string; type: string; id: number } | null;
-}
-
-export const AppContext = createContext<AppContextType | undefined>(undefined);
+import React, { useState, useEffect, type ReactNode } from 'react';
+import type { Movie, MovieCategory } from '../data/movies';
+import { tmdbApi, convertTMDBMovieToAppFormat } from '../services/tmdbApi';
+import { AppContext } from './AppContextTypes';
 
 interface AppProviderProps {
   children: ReactNode;
@@ -50,6 +16,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [currentPage, setCurrentPage] = useState('home');
   const [notification, setNotification] = useState<{ message: string; type: string; id: number } | null>(null);
+
+  // API State
+  const [movieCategories, setMovieCategories] = useState<MovieCategory[]>([]);
+  const [allMovies, setAllMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   // Charger les préférences depuis localStorage
   useEffect(() => {
@@ -133,6 +105,70 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setTimeout(() => setNotification(null), 3000);
   };
 
+  // Refresh movies from TMDB API
+  const refreshMovies = async (): Promise<void> => {
+    setIsLoading(true);
+    setApiError(null);
+
+    try {
+      // Fetch different categories of movies
+      const [popular, topRated, nowPlaying, trending] = await Promise.all([
+        tmdbApi.getPopularMovies(),
+        tmdbApi.getTopRatedMovies(),
+        tmdbApi.getNowPlayingMovies(),
+        tmdbApi.getTrendingMovies()
+      ]);
+
+      // Convert TMDB movies to app format
+      const [popularMovies, topRatedMovies, nowPlayingMovies, trendingMovies] = await Promise.all([
+        Promise.all(popular.results.slice(0, 10).map(convertTMDBMovieToAppFormat)),
+        Promise.all(topRated.results.slice(0, 10).map(convertTMDBMovieToAppFormat)),
+        Promise.all(nowPlaying.results.slice(0, 10).map(convertTMDBMovieToAppFormat)),
+        Promise.all(trending.results.slice(0, 10).map(convertTMDBMovieToAppFormat))
+      ]);
+
+      // Create movie categories
+      const categories: MovieCategory[] = [
+        { title: 'Tendances', movies: trendingMovies },
+        { title: 'Populaires', movies: popularMovies },
+        { title: 'Mieux notés', movies: topRatedMovies },
+        { title: 'Au cinéma', movies: nowPlayingMovies }
+      ];
+
+      // Flatten all movies for search
+      const allMoviesList = [
+        ...trendingMovies,
+        ...popularMovies,
+        ...topRatedMovies,
+        ...nowPlayingMovies
+      ];
+
+      // Remove duplicates based on ID
+      const uniqueMovies = allMoviesList.reduce((acc, movie) => {
+        if (!acc.some(m => m.id === movie.id)) {
+          acc.push(movie);
+        }
+        return acc;
+      }, [] as Movie[]);
+
+      setMovieCategories(categories);
+      setAllMovies(uniqueMovies);
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch movies from TMDB';
+      setApiError(errorMessage);
+      showNotification(errorMessage, 'error');
+      console.error('Error refreshing movies:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Load movies on component mount
+  useEffect(() => {
+    refreshMovies();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <AppContext.Provider value={{
       isDarkMode,
@@ -150,7 +186,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       currentPage,
       setCurrentPage,
       showNotification,
-      notification
+      notification,
+      movieCategories,
+      allMovies,
+      isLoading,
+      apiError,
+      refreshMovies
     }}>
       {children}
     </AppContext.Provider>

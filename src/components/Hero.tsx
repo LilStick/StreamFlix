@@ -1,12 +1,38 @@
-import { featuredMovie } from '../data/movies';
 import { useApp } from '../hooks/useApp';
 
 const Hero: React.FC = () => {
-  const { setSelectedMovie } = useApp();
+  const { setSelectedMovie, allMovies, isLoading } = useApp();
+
+  // Get the first trending movie as featured movie
+  const featuredMovie = allMovies.length > 0 ? allMovies[0] : null;
 
   const handleWatchNow = () => {
-    setSelectedMovie(featuredMovie);
+    if (featuredMovie) {
+      setSelectedMovie(featuredMovie);
+    }
   };
+
+  // Show loading state or fallback if no featured movie
+  if (isLoading || !featuredMovie) {
+    return (
+      <section className="relative h-screen flex items-center justify-start bg-gray-900">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {isLoading ? (
+            <div className="text-white">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-600 mx-auto mb-4"></div>
+              <p className="text-xl">Chargement du film vedette...</p>
+            </div>
+          ) : (
+            <div className="text-white">
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">StreamFlix</h1>
+              <p className="text-xl text-gray-300">Votre plateforme de streaming préférée</p>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative h-screen flex items-center justify-start">
       {/* Background Image */}

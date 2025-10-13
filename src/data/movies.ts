@@ -11,6 +11,7 @@ export interface Movie {
   director: string;
   cast: string[];
   trailer?: string;
+  backdrop?: string | null;
 }
 
 export interface MovieCategory {

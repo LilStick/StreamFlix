@@ -1,10 +1,23 @@
 import React, { useMemo } from 'react';
-import { movieCategories, movies, type Movie } from '../data/movies';
 import { useApp } from '../hooks/useApp';
 import MovieModal from './MovieModal';
+import type { Movie } from '../data/movies';
 
 const MovieGrid: React.FC = () => {
-  const { searchQuery, selectedMovie, setSelectedMovie, watchedMovies, toggleWatched, favoriteMovies, toggleFavorite, isDarkMode } = useApp();
+  const {
+    searchQuery,
+    selectedMovie,
+    setSelectedMovie,
+    watchedMovies,
+    toggleWatched,
+    favoriteMovies,
+    toggleFavorite,
+    isDarkMode,
+    movieCategories,
+    allMovies,
+    isLoading,
+    apiError
+  } = useApp();
 
   // Filter movies by search query
   const filteredCategories = useMemo(() => {
@@ -12,18 +25,18 @@ const MovieGrid: React.FC = () => {
       return movieCategories;
     }
 
-    const filteredMovies = movies.filter(movie =>
+    const filteredMovies = allMovies.filter((movie: Movie) =>
       movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       movie.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
       movie.director.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      movie.cast.some(actor => actor.toLowerCase().includes(searchQuery.toLowerCase()))
+      movie.cast.some((actor: string) => actor.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
     return [{
       title: `Résultats pour "${searchQuery}"`,
       movies: filteredMovies
     }];
-  }, [searchQuery]);
+  }, [searchQuery, movieCategories, allMovies]);
 
   const handleMovieClick = (movie: Movie) => {
     setSelectedMovie(movie);
@@ -38,6 +51,43 @@ const MovieGrid: React.FC = () => {
     e.stopPropagation();
     toggleFavorite(movieId);
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className={`py-16 ${isDarkMode ? 'bg-netflix-dark' : 'bg-gray-100'} min-h-screen flex items-center justify-center`}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p className={`text-xl ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            Chargement des films...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (apiError) {
+    return (
+      <div className={`py-16 ${isDarkMode ? 'bg-netflix-dark' : 'bg-gray-100'} min-h-screen flex items-center justify-center`}>
+        <div className="text-center">
+          <div className="text-red-600 text-6xl mb-4">⚠️</div>
+          <h2 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            Erreur de chargement
+          </h2>
+          <p className={`text-lg mb-6 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            {apiError}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

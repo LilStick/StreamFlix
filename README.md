@@ -16,8 +16,9 @@
 - **Smooth Animations** - CSS transitions and micro-interactions
 
 ### 🎬 **Movie Management**
-- **Curated Catalog** - 5 high-quality movies with local images
-- **Smart Categories** - Popular, by director, genre, ratings
+- **TMDB Integration** - Real-time movie data from The Movie Database API
+- **Smart Categories** - Trending, Popular, Top Rated, Now Playing
+- **Dynamic Content** - Thousands of movies with fresh content
 - **Advanced Search** - Search by title, genre, director, cast
 - **User Favorites** - Add/remove movies from personal list
 - **5-Star Ratings** - User rating system with persistence
@@ -72,6 +73,12 @@ npm install
 # Start development server
 npm run dev
 ```
+
+### API Configuration
+This project uses The Movie Database (TMDB) API for real-time movie data:
+- API key is already configured in `src/services/tmdbApi.ts`
+- Movies are automatically fetched on app startup
+- Categories include: Trending, Popular, Top Rated, and Now Playing
 
 🌐 **App will be available at `http://localhost:5173`**
 
